@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Link from 'next/link';
+
+
+const inter = Inter({ subsets: ["latin"] });
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,17 +23,52 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-      children,
-    }: {
-      children: React.ReactNode;
-    }) {
-      return (
-        <html lang="en">
-          <body>
-            <Header />
-            {children}
-            <Footer />
-          </body>
-        </html>
-      );
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body className="bg-slate-50 text-slate-900 antialiased">
+
+        <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+          <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <Link href="/" className="font-bold text-lg text-slate-800 hover:text-indigo-600 transition-colors">
+              Mi Portafolio
+            </Link>
+
+            <nav className="flex items-center gap-6">
+              <Link
+                href="/"
+                className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                Inicio
+              </Link>
+              <Link
+                href="/about"
+                className="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                href="/projects"
+                className="text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                Projects
+              </Link>
+              <Link
+                href="/contact"
+                className="text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
+        </header>
+
+        {children}
+
+      </body>
+    </html>
+  );
 }
