@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={`${geistMono.variable}` }suppressHydrationWarning>
       <body className="bg-slate-50 text-slate-900 antialiased">
 
         <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">

@@ -1,8 +1,8 @@
 import { Project } from '@/lib/project-db';
 
 async function getProjects(): Promise<Project[]> {
-  const res = await fetch('http://localhost:3001/api/projects', { cache: 'no-store' });
-  if (!res.ok) throw new Error('Error al cargar los proyectos');
+  const res = await fetch('http://localhost:3000/api/projects', { cache: 'no-store' });
+  if (!res.ok) throw new Error('Error loading projects');
   return res.json();
 }
 export default async function ProjectsOverviewPage() {

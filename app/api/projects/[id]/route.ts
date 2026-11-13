@@ -15,7 +15,7 @@ export async function GET(
       { status: 400 }
     );
   }
-  const project = getProjectById(numericId);
+  const project = await getProjectById(numericId);
 
   if (!project) {
     return NextResponse.json(

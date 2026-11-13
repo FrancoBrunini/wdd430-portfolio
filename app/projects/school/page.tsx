@@ -1,8 +1,8 @@
 import { Project } from '@/lib/project-db';
 
 async function getSchoolProjects(): Promise<Project[]> {
-  const res = await fetch('http://localhost:3001/api/projects?type=school', { cache: 'no-store' });
-  if (!res.ok) throw new Error('Error al cargar los proyectos escolares');
+  const res = await fetch('http://localhost:3000/api/projects?type=school', { cache: 'no-store' });
+  if (!res.ok) throw new Error('Error charging escolares');
   return res.json();
 }
 
