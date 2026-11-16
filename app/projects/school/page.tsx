@@ -37,11 +37,9 @@ export default function SchoolPage() {
   return (
     <div>
       <h3 className="text-xl font-semibold text-slate-800 mb-4">
-        School Projects
+        Open School Projects
       </h3>
-      <Suspense fallback={<p className="text-slate-500 text-sm">Loading school projects...</p>}>
         <SchoolProjectsList />
-      </Suspense>
     </div>
   );
 }

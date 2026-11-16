@@ -39,9 +39,7 @@ export default function OpenSourcePage() {
       <h3 className="text-xl font-semibold text-slate-800 mb-4">
         Open Source Projects
       </h3>
-      <Suspense fallback={<p className="text-slate-500 text-sm">Loading open source projects...</p>}>
         <OpenSourceProjectsList />
-      </Suspense>
     </div>
   );
 }

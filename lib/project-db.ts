@@ -1,5 +1,6 @@
 import { sql } from '@vercel/postgres';
 
+const ITEMS_PER_PAGE = 6;
 
 export interface Project {
   id: number;
@@ -28,4 +29,46 @@ export async function getProjectById(id: number): Promise<Project | null> {
     SELECT * FROM projects WHERE id = ${id}
   `;
   return rows[0] ?? null;
+}
+
+
+export async function fetchFilteredProjects(query: string, currentPage: number) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  if (!query) {
+    const { rows } = await sql`
+      SELECT * FROM projects 
+      ORDER BY id 
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+    return rows;
+  }
+
+  const searchTerm = `%${query}%`;
+  const { rows } = await sql`
+    SELECT * FROM projects 
+    WHERE title ILIKE ${searchTerm} 
+       OR description ILIKE ${searchTerm}
+    ORDER BY id 
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+  `;
+  return rows;
+}
+
+export async function fetchProjectsPages(query: string) {
+  'use cache';
+  if (!query) {
+    const { rows } = await sql`SELECT COUNT(*) FROM projects`;
+    const count = Number(rows[0].count);
+    return Math.ceil(count / ITEMS_PER_PAGE);
+  }
+
+  const searchTerm = `%${query}%`;
+  const { rows } = await sql`
+    SELECT COUNT(*) FROM projects 
+    WHERE title ILIKE ${searchTerm} 
+       OR description ILIKE ${searchTerm}
+  `;
+  const count = Number(rows[0].count);
+  return Math.ceil(count / ITEMS_PER_PAGE);
 }
